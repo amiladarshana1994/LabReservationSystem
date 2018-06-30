@@ -10,6 +10,7 @@ import { map } from 'rxjs/operators';
 export class AuthService {
 
   user : any ;
+  authtoken : any ;
 
   constructor(
     private http : Http ,
@@ -24,6 +25,49 @@ export class AuthService {
     .pipe(map(res=>res.json()));
 
   }
+
+  loginuser(userdata){
+    let headers = new Headers();
+    headers.append('Content-Type','application/json');
+    
+    return this.http.post("http://localhost:3000/user/login",userdata,{headers : headers})
+    .pipe(map(res=>res.json()));
+
+  }
+
+  getProfile(){
+    this.fetchToken();
+
+    let headers = new Headers();
+    headers.append('Authorization',this.authtoken);
+    headers.append('Content-Type','application/json');
+    
+    return this.http.get("http://localhost:3000/user/profile",{headers : headers})
+           .pipe(map(res=>res.json())); 
+  }
+
+  
+
+  fetchToken(){
+    const token = localStorage.getItem("tokenid");
+    this.authtoken = token ;
+  }
+
+  storeData(token,user){
+    localStorage.setItem("tokenid",token);
+    localStorage.setItem("user",JSON.stringify(user));
+
+    this.authtoken = token ;
+    this.authtoken = user ;
+
+  }
+
+  logout(){
+    this.authtoken = null;
+    this.user = null;
+    localStorage.clear();
+  }
+
 }
 
  

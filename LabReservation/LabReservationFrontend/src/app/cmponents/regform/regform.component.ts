@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { AuthService } from '../../service/auth.service';
-//import {FlashMessage} from 'angular-flash-message';
+import { NgFlashMessageService } from 'ng-flash-messages';
+import { Route, Router } from '@angular/router';
 
 @Component({
   selector: 'app-regform',
@@ -15,7 +16,8 @@ export class RegformComponent implements OnInit {
 
   constructor(
     private authService : AuthService ,
-    //private flashMessage : FlashMessage 
+    private ngFlashMessageService: NgFlashMessageService,
+    private router : Router
   ) { }
 
   ngOnInit() {
@@ -23,31 +25,39 @@ export class RegformComponent implements OnInit {
 
   registerdata(user){
     //console.log('worked');
-      const userdetails = {
+      /* const userdetails = {
       name     : user.name,
       username : this.username,
       email    : this.username,
       password : this.password
 
-    }  
+    }   */
     //console.log(userdetails);
     this.authService.registerUser(user).subscribe(res=>{
-      console.log(res);
+      //console.log(res);
+      if (res.state){
+        this.ngFlashMessageService.showFlashMessage({
+          // Array of messages each will be displayed in new line
+          messages: ["You are Registered..Please Login..."], 
+          // Whether the flash can be dismissed by the user defaults to false
+          dismissible: true, 
+          // Time after which the flash disappears defaults to 2000ms
+          timeout: 3000,
+          // Type of flash message, it defaults to info and success, warning, danger types can also be used
+          type: 'success',  
+        });
+        this.router.navigate(['/login']);
+      }else {
+        this.ngFlashMessageService.showFlashMessage({
+          messages: ["Something went wrong..!Please try again..."], 
+          dismissible: true, 
+          timeout: 3000,
+          type: 'danger'
+        });
+        this.router.navigate(['/register']);
+      }
       
     });
   };
   } 
-  /* if(res.state){
-    this.flashMessage.success('You are Registered...', {
-      dalay: 1000,
-      generalClass: 'success-class',
-      navigate: '/login'
-      });
-  }
-  else{
-    this.flashMessage.success('Something went wrong.!Please try again..!', {
-      dalay: 1000,
-      generalClass: 'danger-class',
-      navigate: '/register'
-      });   
-    } */
+  

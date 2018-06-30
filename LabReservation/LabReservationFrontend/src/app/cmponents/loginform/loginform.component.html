@@ -4,22 +4,22 @@
     </div>
     <div class="container">
       <div class="col-md-8" >
-        <form>
+        <form id="formData" #userData= "ngForm"  (ngSubmit)="logUser(userData.value)">
           <fieldset>
             
             <legend>Login</legend>
             <div class="form-group">
               <label for="exampleInputEmail1">Email address</label>
-              <input type="email" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" placeholder="Enter email">
+              <input type="email" class="form-control" name="email" placeholder="Enter email" ngModel>
               
             </div>
             <div class="form-group">
               <label for="exampleInputPassword1">Password</label>
-              <input type="password" class="form-control" id="exampleInputPassword1" placeholder="Password">
+              <input type="password" class="form-control" name="password" placeholder="Password" ngModel>
             </div>
             <div class="row">
               <div class="col-md-3">
-                  <button type="submit" class="btn btn-primary">Submit</button>
+                  <button type="submit" value="Register" class="btn btn-primary" mat-Button>Submit</button>
               </div>            
             </div>
             

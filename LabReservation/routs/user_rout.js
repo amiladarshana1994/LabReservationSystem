@@ -14,7 +14,7 @@ router.post("/register", function(req,res){
         email    : req.body.email,
         password : req.body.password 
     });
-    console.log('new_uer'+new_user);
+    //console.log('new_uer'+new_user);
     //call save user method in user_model_schema (user_schema object)
      user_model_schema.saveUser(new_user,function(err,user){
         if(err){
@@ -37,11 +37,18 @@ router.post("/login", function(req,res) {
         if (!user){
             //console.log(user);
             res.json({state : false , msg : "User not found"});
+            return false ;
         }
 
         user_model_schema.checkPassword(password,user.password, function(err,match){
             if(err) throw err;
-            if (match){
+
+            if(!match){
+                res.json({state : false , msg : "Password didn't Matched"});
+                return false ;
+            }
+
+            else{
                 //console.log('matched')
                 //create token that contain user,secret key, and expire time in seconds
                 const payload = ({_id : user.id , name : user.name});
@@ -64,7 +71,7 @@ router.post("/login", function(req,res) {
     });
 }) ;
 
-router.post('/profile', passport.authenticate('jwt', { session: false }),function(req, res) {
+router.get('/profile', passport.authenticate('jwt', { session: false }),function(req, res) {
     res.json({user : req.user});
     //res.send(req.user.body);
 }
