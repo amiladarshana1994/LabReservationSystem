@@ -1,0 +1,27 @@
+<div class="my_position">
+  <!-- <div class="col-xs-9"> -->
+   <legend style="text-align: left;">Lab Details</legend>
+    
+      <div>
+          <table *ngIf="labs" class="table">
+              <thead class="thead-dark">
+                  <tr>
+                      <th>Lab Name</th>
+                      <th>Location</th>
+                      <th>Number of Seats</th>
+                      <th>Type</th>
+                      <th>Details</th>
+                  </tr>
+              </thead>
+              <tbody>
+                  <tr *ngFor="let x of labs">
+                      <td> {{ x.labname}} </td>
+                      <td> {{ x.location}} </td>
+                      <td> {{ x.seat}} </td>
+                      <td> {{ x.type}} </td>
+                      <td> {{ x.details}} </td>
+                  </tr>
+              </tbody>
+          </table>
+      </div>
+  </div>

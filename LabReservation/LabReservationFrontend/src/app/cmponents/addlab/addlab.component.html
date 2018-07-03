@@ -1,0 +1,50 @@
+
+<div class="row">
+  <div class="col-md-3">
+
+  </div>
+  <div class="container">
+    <div class="col-md-8" >
+        <legend>Add Lab Details</legend>
+      <form id="formData" #labData= "ngForm"  (ngSubmit)="addlab(labData.value)">
+        <fieldset> 
+                   
+          <div class="form-group">
+            <label for="labname">Lab Name</label>
+            <input matInput type="text" class="form-control" name="labname" placeholder="Enter Name of the Lab" ngModel > 
+          </div>
+
+          <div class="form-group">
+              <label for="lacation">Location</label>
+              <input type="text" class="form-control" name="location"  placeholder="Enter Location of the Lab" ngModel> 
+          </div>
+          <div class="form-group">
+              <label for="seat">Number of Seats</label>
+              <input type="text" class="form-control" name="seat"  placeholder="Number of Seats In the Lab" ngModel> 
+          </div>
+
+          <div class="form-group">
+              <label for="type">Type</label>
+              <input type="text" class="form-control" name="type" placeholder="Type of the Lab" ngModel> 
+          </div>
+
+          <div class="form-group">
+            <label for="details">Details</label>
+            <input type="text" class="form-control" name="details" placeholder="Details of the Lab" ngModel>
+          </div>
+
+          <div class="row">
+            <div class="col-md-3">
+                <button type="submit" value="Lab" class="btn btn-primary" mat-Button>Submit</button>
+            </div>            
+          </div>
+          
+        </fieldset>
+      </form>
+    </div>
+  </div>
+  
+  <div class="col-md-2">
+    
+  </div>
+</div>

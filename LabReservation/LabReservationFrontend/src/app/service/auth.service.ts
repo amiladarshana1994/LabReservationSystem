@@ -1,8 +1,9 @@
 import { Injectable } from '@angular/core';
 import { Http,Headers } from '@angular/http';
 import { HttpClient,HttpHeaders, } from '@angular/common/http';
-//import 'rxjs/add/operator/map';
 import { map } from 'rxjs/operators';
+import { tokenNotExpired } from 'angular2-jwt'
+import { Observable} from 'rxjs';
 
 @Injectable({
   providedIn: 'root'
@@ -11,9 +12,11 @@ export class AuthService {
 
   user : any ;
   authtoken : any ;
-
+  
   constructor(
     private http : Http ,
+    
+
   ) { }
 
   registerUser(user){
@@ -37,7 +40,7 @@ export class AuthService {
 
   getProfile(){
     this.fetchToken();
-
+    
     let headers = new Headers();
     headers.append('Authorization',this.authtoken);
     headers.append('Content-Type','application/json');
@@ -46,7 +49,48 @@ export class AuthService {
            .pipe(map(res=>res.json())); 
   }
 
-  
+  makeReservation(regdata){
+    this.fetchToken();
+    let headers = new Headers();
+    headers.append('Authorization',this.authtoken);
+    headers.append('Content-Type','application/json');
+    
+    return this.http.post("http://localhost:3000/user/reservation",regdata,{headers : headers})
+    .pipe(map(res=>res.json()));
+
+  }
+
+  registerLab(lab){
+    this.fetchToken();
+    let headers = new Headers();
+    headers.append('Authorization',this.authtoken);
+    headers.append('Content-Type','application/json');
+    
+    return this.http.post("http://localhost:3000/user/registerlab",lab,{headers : headers})
+    .pipe(map(res=>res.json()));
+  }
+
+  viewLab(){
+    console.log('aa');
+    this.fetchToken();
+    let headers = new Headers();
+    headers.append('Authorization',this.authtoken);
+    headers.append('Content-Type','application/json');
+    
+    return this.http.get("http://localhost:3000/user/viewlab",{headers : headers})
+    .pipe(map(res=>res.json()));
+  }
+
+  getReservation(){
+    this.fetchToken();
+    let headers = new Headers();
+    headers.append('Authorization',this.authtoken);
+    headers.append('Content-Type','application/json');
+    
+    return this.http.get("http://localhost:3000/user/viewreservation",{headers : headers})
+    .pipe(map(res=>res.json()));
+  }
+
 
   fetchToken(){
     const token = localStorage.getItem("tokenid");
@@ -66,6 +110,22 @@ export class AuthService {
     this.authtoken = null;
     this.user = null;
     localStorage.clear();
+  }
+
+  loggin(){
+    this.fetchToken();
+    if(this.authtoken){
+      return true;
+    }
+    else{
+      return false;
+    }
+  }
+
+  loggedIn(){
+    //console.log(tokenNotExpired());
+    return tokenNotExpired();
+
   }
 
 }

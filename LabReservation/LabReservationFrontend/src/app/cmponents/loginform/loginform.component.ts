@@ -28,22 +28,24 @@ export class LoginformComponent implements OnInit {
       password : user.password
     };
     this.authservice.loginuser(userdata).subscribe(res=>{
-        //console.log(res);
+        console.log(res.user);
         this.authservice.storeData(res.token,res.user);
 
         if (res.state){
-          this.ngFlashMessageService.showFlashMessage({
-            // Array of messages each will be displayed in new line
-            messages: ["Login Success..."], 
-            // Whether the flash can be dismissed by the user defaults to false
-            dismissible: true, 
-            // Time after which the flash disappears defaults to 2000ms
-            timeout: 3000,
-            // Type of flash message, it defaults to info and success, warning, danger types can also be used
-            type: 'success',  
-          });
-          
+            console.log(res.user.email);
+            this.ngFlashMessageService.showFlashMessage({
+              // Array of messages each will be displayed in new line
+              messages: ["Login Success..."], 
+              // Whether the flash can be dismissed by the user defaults to false
+              dismissible: true, 
+              // Time after which the flash disappears defaults to 2000ms
+              timeout: 3000,
+              // Type of flash message, it defaults to info and success, warning, danger types can also be used
+              type: 'success',  
+            });
+            this.router.navigate(['/home']);             
         }else {
+          console.log('qq');
           this.ngFlashMessageService.showFlashMessage({
             messages: [res.msg], 
             dismissible: true, 
@@ -51,6 +53,7 @@ export class LoginformComponent implements OnInit {
             type: 'danger'
           });
           this.router.navigate(['/login']);
+          
         }
         
       });

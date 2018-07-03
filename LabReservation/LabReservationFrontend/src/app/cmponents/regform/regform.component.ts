@@ -9,9 +9,10 @@ import { Route, Router } from '@angular/router';
   styleUrls: ['./regform.component.css']
 })
 export class RegformComponent implements OnInit {
-  name : String ;
+  name     : String ;
   username : String ;
-  email : String;
+  regno    : String ;
+  email    : String;
   password : String ;
 
   constructor(
@@ -36,6 +37,7 @@ export class RegformComponent implements OnInit {
     this.authService.registerUser(user).subscribe(res=>{
       //console.log(res);
       if (res.state){
+        console.log(res.msg);
         this.ngFlashMessageService.showFlashMessage({
           // Array of messages each will be displayed in new line
           messages: ["You are Registered..Please Login..."], 

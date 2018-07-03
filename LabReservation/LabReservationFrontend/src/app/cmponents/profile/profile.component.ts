@@ -1,5 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { AuthService } from '../../service/auth.service';
+import { NgFlashMessageService } from 'ng-flash-messages';
+import { Route, Router } from '@angular/router';
 
 @Component({
   selector: 'app-profile',
@@ -12,14 +14,22 @@ export class ProfileComponent implements OnInit {
 
   constructor(
     private authservice : AuthService,
+    private ngFlashMessageService : NgFlashMessageService,
+    private router : Router
   ) { }
 
   ngOnInit() {
     this.authservice.getProfile().subscribe(res=>{
       //console.log(res);
       this.user = res.user ;
-      console.log(this.user);
-    });
-  }
+      //console.log(this.user);
+      
+  });
+
 
 }
+}
+
+
+
+
