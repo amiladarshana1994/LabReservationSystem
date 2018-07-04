@@ -1,0 +1,51 @@
+ <mat-sidenav-container class="sidenav-container">
+  <mat-sidenav
+    #drawer
+    class="sidenav"
+    fixedInViewport="true"
+    [attr.role]="(isHandset$ | async) ? 'dialog' : 'navigation'"
+    [mode]="(isHandset$ | async) ? 'over' : 'side'"
+    [opened]="!(isHandset$ | async)">
+    <mat-toolbar color="primary"></mat-toolbar>
+    <mat-nav-list>
+        <div *ngIf="authservice.loggin()"><a mat-list-item [routerLink]="['/reservation']">Make Reservation</a></div>
+        <div *ngIf="authservice.loggin()"><a mat-list-item [routerLink]="['/viewreservation']">Show Reservations</a></div>
+        <div *ngIf="authservice.isAdmin()"><a mat-list-item [routerLink]="['/addlab']">Add Lab Details</a></div>
+        <div *ngIf="authservice.loggin()"><a mat-list-item [routerLink]="['/viewlab']">Show Lab Details</a></div>
+        <div *ngIf="authservice.isAdmin()"><a mat-list-item [routerLink]="['/']">Genarate Reports</a></div>
+            
+            
+            
+            
+        
+
+      
+    </mat-nav-list>
+  </mat-sidenav>
+  <mat-sidenav-content>
+    <mat-toolbar color="primary">
+      <button
+        type="button"
+        aria-label="Toggle sidenav"
+        mat-icon-button
+        (click)="drawer.toggle()"
+        *ngIf="isHandset$ | async">
+        <mat-icon aria-label="Side nav toggle icon">menu</mat-icon>
+      </button>
+      <div *ngIf="authservice.loggin()">
+      <a mat-list-item  [routerLink]="['/home']">Home</a></div>
+       
+        <div *ngIf="user">
+            <a>{{user.name}}</a>
+        </div>
+
+      <span class="spacer"></span>
+        <div *ngIf="!authservice.loggin()"><a class="nav-link" [routerLink]="['/register']">Register</a></div>
+        <div *ngIf="!authservice.loggin()"><a class="nav-link" [routerLink]="['/login']">Login</a></div>
+        <div *ngIf="authservice.loggin()"><a class="nav-link" [routerLink]="['/profile']">Profile</a></div>
+        <div *ngIf="authservice.loggin()"><a class="nav-link"  href="/login" (click)="logoutUser()">Logout</a></div>        
+      
+    </mat-toolbar>
+    <ng-content> </ng-content>
+  </mat-sidenav-content>
+</mat-sidenav-container>

@@ -1,0 +1,12 @@
+.container{
+    background-image: url('kogod_fsit-lab-availability_1.jpg') ;
+    padding-left: 300px;
+    padding-top: 200px ;
+    padding-bottom: 300px;
+    background-size: 100% 100%;
+    height: 700px; 
+}
+
+.lable{
+    color: beige; 
+}
